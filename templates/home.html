@@ -8,6 +8,11 @@
 </head>
 <body class="font-poppins bg-blue-400">
     <p class="mt-5 ml-5 text-2xl">Looking at Two Knicks vs Celtics Games Through Nonnegative Matrix Factorization (NMF) </p>
+    <ul class="ml-5 inline-flex mt-5">
+        <li class="mr-10"><a href="/">NMF</a></li>
+        <li class="mr-10"><a href="/analysis">Analysis</a></li>
+        <li><a href="/heatmap_generation">Heatmap Generation</a></li>
+    </ul>
     <p class="mt-5 ml-5 text-xl">What is NMF?</p>
     <p class="mt-5 ml-5 mr-10 text-base">Non-negative matrix factorization (NMF) is a linear algebra technique that factors a nonnegative matrix V into WH, where
         W and H are both nonnegative. 
@@ -33,74 +38,18 @@
         NMF makes the assumption that V = WH is possible. It isn't always possible so computers run algorithms to estimate W and H. Essentially the problem they solve is minimizing the Frobenius norm of A - WH where A is the matrix you are factoring: 
         <img class="w-50% block m-auto mt-5" src="static/frob.png">
     </p>
-    <p class="mt-5 ml-5 mr-10">I am not sure I have the mathematical knowledge to calculate a Frobenius norm but that's fine because we are using a computer program to do it for us!
+    <p class="mt-5 ml-5 mr-10">I am not sure I have the mathematical knowledge to understand the Frobenius norm but that's fine because we are using a computer program to do it for us!
         The reason NMF produces a parts-based representation is because W and H have to be nonnegative. While doing the matrix multiplication, there's essentially no cancellation
         that's possible in other decomposition methods like PCA. This somehow generates sparse column vectors in W as a side effect.  
     </p>
     <p class="mt-5 ml-5 text-xl">Data Collection</p>
-    <p class="mt-5 ml-5 mr-10">
+    <p class="mt-5 ml-5 mr-10 mb-10">
         I watched two full Knicks vs Celtics games (2/23, 4/8) and tracked shot attempts and where individual players shot those shots in a Google Sheets. 
         I decided to record the shot location as the last point of contact between their foot and the ground before they shot the ball. I mapped
         out the halfcourt as a 29 by 25 mesh. So that meant that each player was represented by 29*25=725 by 1 vectors. Each entry in that vector represents shot attempts from a location on the court. 
         I decided to track only the players whom I thought consistently contributed to the team, whatever that means. The players I recorded were: Jalen Brunson, Mitchell Robinson,
         Mikal Bridges, Karl Anthony Towns, Josh Hart, OG Anunoby, Jason Tatum, Jaylen Brown, Al Horford, Derrick White, Jrue Holiday, Prayton Pritchard, and Kristaps
-        Porzingis. That's a total of 13 players so I ended up with a 725 by 13 matrix.
-    </p>
-    <p class="mt-5 ml-5 text-xl">Results</p>
-    <div class="flex flex-row flex-wrap justify-evenly scale-50 -mt-25">
-        <img src="static/2/component_0.png">
-        <img src="static/2/component_1.png">
-    </div>
-    <div class="text-center -mt-25">Rank 2 Factoring</div>
-    <div class="flex flex-row flex-wrap scale-50 w-700 -ml-145 -mt-75">
-        <img src="static/10/component_0.png">
-        <img src="static/10/component_1.png">
-        <img src="static/10/component_2.png">
-        <img src="static/10/component_3.png">
-        <img src="static/10/component_4.png">
-        <img src="static/10/component_5.png">
-        <img src="static/10/component_6.png">
-        <img src="static/10/component_7.png">
-        <img src="static/10/component_8.png">
-        <img src="static/10/component_9.png">
-
-    </div>
-    <div class="text-center -mt-85">Rank 10 Factoring</div>
-    <p class="mt-10 ml-5 mr-10">Above are the "components" that NMF generated, the darker the color the greater the value. I first asked it for a rank 10 factoring and then I asked it for a rank 2 factoring.
-        In the rank 10 factoring, there are several components that represent scoring in the paint and they actually seem a bit redundant. 
-        However, the three point show is more intuitively represented. From left to right, component 5, 6, 8, and 10 seem to represent different
-        three pointers. Five represents some corner and wing threes while six represents the right corner even more. Eight actually represents
-        the right corner and the right wing. Ten represents the top of the key. 
-        <br><br>
-        In the rank 2 factoring, the first component represents most of the paint scoring while the second component represents
-        most of the three which come from mainly the top of the key, the right wing, and the right corner. We can see that the midrange shot is not well
-        represented. 
-        <br><br>
-        Some of these features probably come from the fact that the sample size (2 games) is so small. 
-        <br><br>
-        Additionally, I looked at some of the players' weighted components. 
-        <br><br>
-        What was really surprising to me was how, in the rank 2 factoring, both Jalen Brunson and Kristaps Porzingis did not have any of the first component and only had the second component.
-        However, Josh Hart had the first component but also had the second component. So, perhaps somehow, the second component has to do with shooters making layups.
-    </p>
-    <div class="flex flex-row scale-50 -mr-75 -mt-15">
-        <img src="static/brunson2/0.png">
-        <img src="static/brunson2/1.png">
-    </div>
-    <div class="text-center -mt-25">Jalen Brunson</div>
-    <div class="flex flex-row scale-50 -mr-75 -mt-15">
-        <img src="static/kristaps2/0.png">
-        <img src="static/kristaps2/1.png">
-    </div>
-    <div class="text-center -mt-25">Kristaps Porzingis</div>
-        <div class="flex flex-row scale-50 -mr-75 -mt-15">
-        <img src="static/joshhart2/0.png">
-        <img src="static/joshhart2/1.png">
-    </div>
-    <div class="text-center -mt-25">Josh Hart</div>
-    <p class="mt-10 ml-5 mr-10 mb-30">With more data, NMF could maybe be used to figure out what shots players prefer and do not prefer taking. Other teams could used
-        this information to set up defenses to counteract them. This model also doesn't account for the accuracy of those shots or the time of the shotclock when
-        those shots were taken so this model may not illuminate too many details. 
+        Porzingis. That's a total of 13 players so I ended up with a 725 by 13 matrix. Note that this is a pretty small sample size.    
     </p>
 </body>
 </html>

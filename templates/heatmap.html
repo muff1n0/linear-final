@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width='device-width', initial-scale=1.0">
+    <title>Heatmap Generation</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='output.css')}}">
+</head>
+<body class="font-poppins bg-blue-400">
+    <p class="mt-5 ml-5 text-2xl">Looking at Two Knicks vs Celtics Games Through Nonnegative Matrix Factorization (NMF) </p>
+    <ul class="ml-5 inline-flex mt-5">
+        <li class="mr-10"><a href="/">NMF</a></li>
+        <li class="mr-10"><a href="/analysis">Analysis</a></li>
+        <li><a href="/heatmap_generation">Heatmap Generation</a></li>
+    </ul>
+    <form action="/heatmap_generation" method="POST" class="ml-5 mt-10">
+        <label for="players">Player:</label>
+        <select name="player" id="players" class="bg-white mb-2"> 
+            <option value="0">Jalen Brunson</option>
+            <option value="1">Mitchell Robinson</option>
+            <option value="2">Mikal Bridges</option>
+            <option value="3">Karl Anthony Towns</option>
+            <option value="4">Josh Hart</option>
+            <option value="5">OG Anunoby</option>
+            <option value="6">Jayson Tatum</option>
+            <option value="7">Jaylen Brown</option>
+            <option value="8">Al Horford</option>
+            <option value="9">Derrick White</option>
+            <option value="10">Jrue Holiday</option>
+            <option value="11">Payton Pritchard</option>
+            <option value="12">Kristaps Porzingis</option>
+        </select>
+        <br>
+        <label for="rank">Rank/Dimensionality: </label>
+        <input type="text" name="rank" id="rank" class="bg-white">
+        <br>
+        <br>
+        <input type="submit" value="Submit" class="bg-white px-2 cursor-pointer">
+    </form>
+    {% if display %}
+    <p class="mt-15 place-self-center">Components</p>
+    <ul class="flex flex-wrap justify-center mt-15">
+        {% for i in range(rank) %}
+            <li><img class="object-cover h-50" src="static/generated/component_{{i}}.png"></li>
+        {% endfor %}
+    </ul>
+    <p class="mt-15 place-self-center">{{name.title()}}'s Shot Decomposition</p>
+    <ul class="flex flex-wrap justify-center mt-15 mb-20">
+        {% for i in range(rank) %}
+            <li><img class="object-cover h-50" src="static/generated/{{i}}.png"></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>

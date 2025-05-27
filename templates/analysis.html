@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis</title>
+     <link rel="stylesheet" href="{{url_for('static', filename='output.css')}}">
+</head>
+<body class="font-poppins bg-blue-400">
+        <p class="mt-5 ml-5 text-2xl">Looking at Two Knicks vs Celtics Games Through Nonnegative Matrix Factorization (NMF) </p>
+    <ul class="ml-5 inline-flex mt-5">
+        <li class="mr-10"><a href="/">NMF</a></li>
+        <li class="mr-10"><a href="/analysis">Analysis</a></li>
+        <li><a href="/heatmap_generation">Heatmap Generation</a></li>
+    </ul>
+    <p class="mt-10 ml-5 mr-10">I decomposed the 725 by 13 matrix using several ranks/dimensions (n = 2 .. 10). The resulting W matrix would have n columns and I took the n columns and reshaped them into 29 by 25 matrices. 
+        Then I viewed these matrices as images over an NBA court.</p> 
+        <ul class="flex flex-wrap justify-center mt-15">
+            <li><img class="object-cover h-50" src="static/2/component_0.png"></li>
+            <li><img class="object-cover h-50" src="static/2/component_1.png"></li>
+        </ul>
+
+    <div class="text-center mt-10">Rank 2 Factoring</div>
+    <p class="mt-10 mx-10 place-self-center">In the rank 2 factoring, the first component seems to represent scoring in the paint, while the second component represents perimeter shooting with some paint scoring.</p>
+                <ul class="flex flex-wrap justify-center mt-15 w-200 place-self-center">
+                    <li><img class="object-cover h-50" src="static/6/component_0.png"></li>
+                    <li><img class="object-cover h-50" src="static/6/component_1.png"></li>
+                    <li><img class="object-cover h-50" src="static/6/component_2.png"></li>
+                    <li><img class="object-cover h-50" src="static/6/component_3.png"></li>
+                    <li><img class="object-cover h-50" src="static/6/component_4.png"></li>
+                    <li><img class="object-cover h-50" src="static/6/component_5.png"></li>
+                </ul>
+    <div class="text-center mt-10">Rank 6 Factoring</div>
+    <p class="mt-10 place-self-center mx-10">In the rank 6 factoring, we see that the paint scoring is split up and included in every component, although it's not too clear why the paint scoring
+        is distributed among the components in that way. However, you can sort of see that component 1 represents layups specically. The perimeter shooting is split up more intuitively. 
+        Component two seems to represent top of the key scoring, five seems to represent shooting at the right wing, and six seems to represent shooting at the right corner. My reasoning for why 
+        these shooting components also have major paint scoring is because being a threat on the perimeter encourages defenders to defend a certain way and force them into the paint. NMF seems to 
+        create components that represent different types of players that are represented in the data. The aforementioned shooters are represented by players like Kristaps Porzingis and Karl Anthony Towns. 
+        Component three is exactly Jayson Tatum's shot chart, while component four resembles Al Horford, Mitchell Robinson, and Josh Hart.  
+    </p>
+                <ul class="flex flex-wrap justify-center mt-15 place-self-center">
+                    <li><img class="object-cover h-50" src="static/tatum.png"></li>
+                    <li><img class="object-cover h-50" src="static/al.png"></li>
+                    <li><img class="object-cover h-50" src="static/mitchell.png"></li>
+                    <li><img class="object-cover h-50" src="static/josh.png"></li>
+                </ul>
+    <p class="place-self-center mt-10">Shot Charts</p>
+    <p class="place-self-center">From left to right: Jayson Tatum, Al Horford, Mitchell Robinson, Josh Hart</p>
+    <p class="mt-10 mx-10 place-self-center ">This seems to suggest that Jayson Tatum is a unique player in this set of players as he shoots from pretty much everywhere on the court at a uniform volume except for the corner, while 
+        other players specialize in certain spaces and shoot only certain shots. Al Horford, Mitchell Robinson, and Josh Hart are players that are relatively less involved offensively compared to their teammates.
+        They are on the court to either play defense or rebound so most of their shots are out-of-system shots that come from tip-ins or late-clock shots.  
+    </p>
+                <ul class="flex flex-wrap justify-center mt-15 w-360 place-self-center">
+                    <li><img class="object-cover h-50" src="static/10/component_0.png"></li>
+                    <li><img class="object-cover h-50" src="static/10/component_1.png"></li>
+                    <li><img class="object-cover h-50" src="static/10/component_2.png"></li>
+                    <li><img class="object-cover h-50" src="static/10/component_3.png"></li>
+                    <li><img class="object-cover h-50" src="static/10/component_4.png"></li>
+                    <li><img class="object-cover h-50" src="static/10/component_5.png"></li>
+                    <li><img class="object-cover h-50" src="static/10/component_6.png"></li>
+                    <li><img class="object-cover h-50" src="static/10/component_7.png"></li>
+                    <li><img class="object-cover h-50" src="static/10/component_8.png"></li>
+                    <li><img class="object-cover h-50" src="static/10/component_9.png"></li>
+
+                </ul> 
+    <div class="text-center mt-10">Rank 10 Factoring</div>
+    <p class="mt-10 mx-10 place-self-center">In the rank 10 factoring, the perimeter shooting and paint-scoring, respectively, are split up even more. 
+        One thing I've noticed is that the colors in each heatmap are more homogenuous as the rank increases, which might be how NMF identifies different types of scorers. 
+    </p>
+        </p>
+                <ul class="flex flex-wrap justify-center mt-15 w-380 place-self-center">
+                    {%for i in range(0, 6)%}
+                    <li><img class="object-cover w-60" src="static/jason_tatum6/{{i}}.png"></li>
+                    {%endfor%}
+                    {%for i in range(0, 6)%}
+                    <li><img class="object-cover w-60" src="static/jaylen_brown6/{{i}}.png"></li>
+                    {%endfor%}
+                    {%for i in range(0, 6)%}
+                    <li><img class="object-cover w-60" src="static/al_horford6/{{i}}.png"></li>
+                    {%endfor%}
+                    {%for i in range(0, 6)%}
+                    <li><img class="object-cover w-60" src="static/derrick_white6/{{i}}.png"></li>
+                    {%endfor%}
+                    {%for i in range(0, 6)%}
+                    <li><img class="object-cover w-60" src="static/jrue_holiday6/{{i}}.png"></li>
+                    {%endfor%}
+                    {%for i in range(0, 6)%}
+                    <li><img class="object-cover w-60" src="static/payton_pritchard6/{{i}}.png"></li>
+                    {%endfor%}
+                    {%for i in range(0, 6)%}
+                    <li><img class="object-cover w-60" src="static/kristaps_porzingis6/{{i}}.png"></li>
+                    {%endfor%}
+                </ul> 
+                <p class="mt-10 ml-5 mr-10 place-self-center">The Boston Celtics Rank-6 Components</p>
+                <p class=" ml-5 mr-10 place-self-center">From top to bottom: Jayson Tatum, Jaylen Brown, Al Horford, Derrick White, Jrue Holiday, Payton Pritchard, Kristaps Porzingis</p>
+                <p class="mt-10 mx-10 place-self-center">Jayson Tatum and Kristaps Porzingis are the highest volume shooters of the Celtics and they pretty much can score from anywhere. As the team that holds the greatest number of threes
+                    shot in a season, most player's have their higher coefficients in components that include shooting: Jayson Tatum has a high coefficient for component 2,
+                     Jaylen Brown for component 5, Derrick White for component 6, Jrue Holiday for component 2, Payton Pritchard for component 5, and Kristaps Porzingis for component 2. 
+                     This team is so effective because pretty much all of its players prefer to shoot which forces defenses to clear up space in the paint which also lets the Celtics score in the paint. 
+                </p>
+                  <ul class="flex flex-wrap justify-center mt-15 w-380 place-self-center">
+                    {%for i in range(0, 6)%}
+                    <li><img class="object-cover w-60" src="static/jalen_brunson6/{{i}}.png"></li>
+                    {%endfor%}
+                    {%for i in range(0, 6)%}
+                    <li><img class="object-cover w-60" src="static/mitchell_robinson6/{{i}}.png"></li>
+                    {%endfor%}
+                    {%for i in range(0, 6)%}
+                    <li><img class="object-cover w-60" src="static/mikal_bridges6/{{i}}.png"></li>
+                    {%endfor%}
+                    {%for i in range(0, 6)%}
+                    <li><img class="object-cover w-60" src="static/karl_anthony_towns6/{{i}}.png"></li>
+                    {%endfor%}
+                    {%for i in range(0, 6)%}
+                    <li><img class="object-cover w-60" src="static/josh_hart6/{{i}}.png"></li>
+                    {%endfor%}
+                    {%for i in range(0, 6)%}
+                    <li><img class="object-cover w-60" src="static/og_anunoby6/{{i}}.png"></li>
+                    {%endfor%}
+                </ul> 
+                 <p class="mt-10 ml-5 mr-10 place-self-center">The New York Knicks Rank-6 Components</p>
+                <p class=" ml-5 mr-10 place-self-center">From top to bottom: Jalen Brunson, Mitchell Robinson, Mikal Bridges, Karl Anthony Towns, Josh Hart, OG Anunoby</p>
+                <p class="mt-10 mx-10 place-self-center">Compared to the Celtics' heatmaps for those two games, the Knicks' shooting volume distribution among its players is more widespread.
+                    What's also interesting is that each of the Knick's have different components. This suggests that the Knicks' players are like specialists. Jalen Brunson and 
+                    Karl Anthony Towns are the primary scorers of the Knicks and they are threats from the perimeter and the paint. Brunson seems to shoot more at the right wing 
+                    compared to Towns who shoots from around the perimeter. Towns' big size allows him to score more in the paint. Mitchell Robinson is barely an offensive option for 
+                    the Knicks as shown by his heatmaps. OG Anunoby complements Towns and Brunson by cutting and benefitting from Towns' and Brunson's play-making abilities. OG seems to 
+                    specialize in the corner but also participates in midrange shots and paint-scoring. Mikal Bridges is another option for the Knicks' because of his catch-and-shoot capabilities
+                    but he probably shoots at a lower volume because Brunson is so ball-dominant and the Knicks prefer to run the offense through players like Towns. 
+                </p>
+                <p class="mt-10 mx-10 place-self-center">Something I've noticed is that high volume shooters like Jayson Tatum, Jalen Brunson, Karl Anthony Towns, and Kristaps Porzingis are represented by singular components. These high volume shooters
+                    become one of the types of players that the NMF algorithm generates. 
+                </p>
+                <p class="mt-10 mx-10 place-self-center">Some usefulness for NMF in this context may come from using these heatmaps to analyze player's weaknesses. Trivially, we know players like Mitchell Robinson and Josh Hart are poor shooters beyond the paint so opposing 
+                    teams would prefer to keep the ball in their hands beyond the paint. Other team's might have players that lack the size to score in the paint or are simply poor finishers and this model may illuminate that. So, this model may encourage teams to play less intense defense on them. 
+                </p>
+                <p class="mt-10 mx-10 place-self-center mb-10">Some flaws of this model are that, for this project specifically, the sample size is so small. This model simply tracks shots taken so it doesn't take into account for variables like shots that actually were scored or time on the shot clock when the shot was taken. </p>
+</body>         
+</html>
