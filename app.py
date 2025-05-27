@@ -38,14 +38,13 @@ def generate_component(W, n):
     plt.imshow(rW, cmap="Blues", norm=NoNorm())
     plt.savefig(f"static\\component_{n}.png")
 
-def create_img(W, H, m, n):
-    Wn = W[:, m]
-    Hn = H[:, n][m]
-    V = Hn * Wn
-    print(Hn)
-    rV = V.reshape((29, 25))
-    plt.imshow(rV, cmap="Blues", norm=NoNorm())
-    plt.savefig(f"static\\{index[n].replace(" ", "_")}6\\{m}.png")
+# def create_img(W, H, m, n):
+#     Wn = W[:, m]
+#     Hn = H[:, n][m]
+#     V = Hn * Wn
+#     rV = V.reshape((29, 25))
+#     plt.imshow(rV, cmap="Blues", norm=NoNorm())
+#     plt.savefig(f"static\\{index[n].replace(" ", "_")}6\\{m}.png")
 
 def get_weight(H, n):
     Hn = H[:, n]
