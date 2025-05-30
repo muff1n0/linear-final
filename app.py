@@ -111,4 +111,4 @@ W, H = factorize(V, 6)
 #     print(index[i], get_weight(H, i))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8080)
